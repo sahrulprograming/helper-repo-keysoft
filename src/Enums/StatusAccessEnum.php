@@ -2,7 +2,7 @@
 
 namespace Keysoft\HelperLibrary\Enums;
 
-enum UserStatusEnum: int
+enum StatusAccessEnum: int
 {
     case SUSPENDED = 0;
     case ACTIVE = 1;
