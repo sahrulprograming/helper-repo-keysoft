@@ -1,0 +1,26 @@
+{
+  "name": "keysoft/helper-library-microservice",
+  "description": "Shared Library for Microservice Keysoft projects",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Keysoft\\HelperLibrary\\": "src"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Keysoft\\HelperLibrary\\Providers\\HelperLibraryServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "illuminate/database": "^12.0",
+    "illuminate/support": "^12.0",
+    "illuminate/http": "^12.0",
+    "illuminate/routing": "^12.0",
+    "illuminate/session": "^12.0"
+  }
+}
