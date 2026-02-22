@@ -3,11 +3,14 @@
 
 namespace Keysoft\HelperLibrary\Models;
 
+use App\Traits\AuditedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class MsUser extends Model
 {
+    use AuditedBy;
+
     protected $table = 'ms_users';
     public const PIVOT_USER_TENANT_TABLE_NAME = 'pivot_user_tenant';
 

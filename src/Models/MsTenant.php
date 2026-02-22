@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class MsTenant extends Model
 {
     use AuditedBy;
+
     protected $table = 'ms_tenant';
 
     protected $guarded = [

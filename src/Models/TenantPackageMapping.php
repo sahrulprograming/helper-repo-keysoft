@@ -2,11 +2,14 @@
 
 namespace Keysoft\HelperLibrary\Models;
 
+use App\Traits\AuditedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TenantPackageMapping extends Model
 {
+    use AuditedBy;
+
     protected $table = 'tenant_package_mapping';
 
     public $incrementing = true;

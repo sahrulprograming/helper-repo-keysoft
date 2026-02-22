@@ -2,8 +2,8 @@
 
 namespace Keysoft\HelperLibrary\Models;
 
-use App\Support\TenantConnection;
 use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Support\TenantConnection;
 
 class BaseModelTenant extends Model
 {

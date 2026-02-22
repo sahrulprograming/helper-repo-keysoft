@@ -2,12 +2,15 @@
 
 namespace Keysoft\HelperLibrary\Models;
 
+use App\Traits\AuditedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class MsPackage extends Model
 {
-protected $table = 'ms_packages';
+    use AuditedBy;
+
+    protected $table = 'ms_packages';
 
     protected $guarded = [
         'id',
