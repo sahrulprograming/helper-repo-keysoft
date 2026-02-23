@@ -1,4 +1,5 @@
 <?php
+
 namespace Keysoft\HelperLibrary\Support;
 
 use Illuminate\Support\Facades\Config;
@@ -8,6 +9,9 @@ use Keysoft\HelperLibrary\Models\MsTenant;
 
 class TenantConnection
 {
+    protected static bool $initialized = false;
+    protected static ?string $currentTenant = null;
+
     public static function set(): void
     {
         $tenant = ActiveTenant::fromSession();
@@ -16,25 +20,36 @@ class TenantConnection
             return;
         }
 
-        $tenant = MsTenant::where('code', $tenant->code)->first();
-
-        if (!$tenant) {
+        // prevent re-init same tenant
+        if (self::$initialized && self::$currentTenant === $tenant->code) {
             return;
         }
 
-        Config::set('database.connections.tenant', [
+        $model = MsTenant::where('code', $tenant->code)->first();
+
+        if (!$model) {
+            return;
+        }
+
+        self::$currentTenant = $tenant->code;
+        self::$initialized = true;
+
+        $connection = [
             'driver' => 'pgsql',
-            'host' => $tenant->db_host,
-            'port' => (int) $tenant->db_port,
-            'database' => $tenant->db_name,
-            'username' => $tenant->db_user,
-            'password' => $tenant->db_password,
+            'host' => $model->db_host,
+            'port' => (int) $model->db_port,
+            'database' => $model->db_name,
+            'username' => $model->db_user,
+            'password' => $model->db_password,
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
             'sslmode' => 'prefer',
-        ]);
+        ];
 
+        Config::set('database.connections.tenant', $connection);
+
+        // purge connection to force fresh
         DB::purge('tenant');
     }
 }
