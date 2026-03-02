@@ -15,6 +15,11 @@ class WbComponentRegistry extends Model
     protected $table = self::TABLE_NAME;
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'default_props' => 'array',
+        'default_style' => 'array',
+    ];
+
     public function registryCategory(): BelongsTo
     {
         return $this->belongsTo(WbComponentRegistryCategory::class, 'registry_category_id');
