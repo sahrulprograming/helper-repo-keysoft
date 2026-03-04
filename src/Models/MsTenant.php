@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Keysoft\HelperLibrary\Support\GeneralCipher;
+use RuntimeException;
 
 class MsTenant extends Model
 {
@@ -22,9 +23,7 @@ class MsTenant extends Model
     protected function dbPassword(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => $value === null
-                ? null
-                : $this->cipher()->decrypt($value),
+            get: fn (?string $value) => $this->decryptDbPassword($value),
             set: fn (?string $value) => $value === null
                 ? null
                 : $this->cipher()->encrypt($value),
@@ -49,5 +48,24 @@ class MsTenant extends Model
     protected function cipher(): GeneralCipher
     {
         return new GeneralCipher();
+    }
+
+    protected function decryptDbPassword(?string $value): ?string
+    {
+        if ($value === null || $value === '') {
+            return $value;
+        }
+
+        $cipher = $this->cipher();
+
+        if (! $cipher->isEncrypted($value)) {
+            return $value;
+        }
+
+        try {
+            return $cipher->decrypt($value);
+        } catch (RuntimeException) {
+            return $value;
+        }
     }
 }
