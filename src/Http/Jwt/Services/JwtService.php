@@ -20,11 +20,11 @@ class JwtService
 
     public function __construct()
     {
-        $this->secret = Config::get('helper-library.jwt.secret');
-        $this->algorithm = Config::get('helper-library.jwt.algorithm', 'HS256');
-        $this->ttl = Config::get('helper-library.jwt.ttl', 3600);
-        $this->refreshTtl = Config::get('helper-library.jwt.refresh_ttl', 86400);
-        $this->blacklist = Config::get('helper-library.jwt.blacklist_enabled', true);
+        $this->secret = Config::get('keysoft-lib-config.jwt.secret');
+        $this->algorithm = Config::get('keysoft-lib-config.jwt.algorithm', 'HS256');
+        $this->ttl = Config::get('keysoft-lib-config.jwt.ttl', 3600);
+        $this->refreshTtl = Config::get('keysoft-lib-config.jwt.refresh_ttl', 86400);
+        $this->blacklist = Config::get('keysoft-lib-config.jwt.blacklist_enabled', true);
     }
 
     /**
