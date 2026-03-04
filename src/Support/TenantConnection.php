@@ -47,9 +47,11 @@ class TenantConnection
             'sslmode' => 'prefer',
         ];
 
+        DB::disconnect('tenant');
         Config::set('database.connections.tenant', $connection);
 
         // purge connection to force fresh
         DB::purge('tenant');
+        DB::reconnect('tenant');
     }
 }

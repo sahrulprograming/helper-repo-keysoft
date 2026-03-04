@@ -12,19 +12,45 @@ This package centralizes reusable components and enforces operational policies a
 - Shared Enums
 - Shared Traits
 - Shared Infrastructure Utilities
+- JWT Service and Middleware
 - Centralized Command Guard (Artisan protection layer)
 - Laravel Auto-Discovery Support
 
 ---
 
+# 📦 Setup
+
+```json
+"repositories": [
+     {
+         "type": "vcs",
+         "url": "https://github.com/KeysoftGit/laravel-library-microservice.git"
+     }
+ ]
+````
+Add manual on your composer.json.
+
+---
+# 📦 Registry Your Token Github
+
+```bash
+composer config --global github-oauth.github.com TOKEN_GITHUB
+```
+
+Replace TOKEN_GITHUB.
+
+---
 # 📦 Installation
 
 Install via Composer:
 
 ```bash
 composer require keysoft/helper-library-microservice
-````
-
+```
+OR
+```bash
+composer require keysoft/helper-library-microservice:dev-main
+```
 Laravel will automatically discover the service provider.
 
 ---
@@ -41,6 +67,244 @@ This will generate:
 
 ```
 config/keysoft-lib-config.php
+```
+
+# JWT
+
+## Overview
+
+The package includes a JWT helper for:
+
+- token generation
+- token validation
+- token refresh / rotation
+- token revocation using blacklist
+- permission lookup from the token payload
+
+Main classes:
+
+```php
+Keysoft\HelperLibrary\Http\Jwt\Services\JwtService
+Keysoft\HelperLibrary\Http\Middleware\JwtMiddleware
+Keysoft\HelperLibrary\Http\Jwt\Exceptions\JwtException
+```
+
+---
+
+## JWT Configuration
+
+After publishing the config file, set these environment variables:
+
+```env
+JWT_SECRET=change-this-secret
+JWT_ALGORITHM=HS256
+JWT_TTL=3600
+JWT_REFRESH_TTL=86400
+```
+
+Relevant config section:
+
+```php
+'jwt' => [
+    'secret' => env('JWT_SECRET', 'your-secret'),
+    'algorithm' => env('JWT_ALGORITHM', 'HS256'),
+    'ttl' => env('JWT_TTL', 3600),
+    'refresh_ttl' => env('JWT_REFRESH_TTL', 86400),
+    'blacklist_enabled' => true,
+    'prefix' => 'Bearer',
+],
+```
+
+Notes:
+
+- `ttl` is the token lifetime in seconds
+- `refresh_ttl` is the maximum token age that can still be refreshed
+- `blacklist_enabled` allows token revocation
+
+---
+
+## Generate Token
+
+Use `JwtService` from your controller or service:
+
+```php
+use Keysoft\HelperLibrary\Http\Jwt\Services\JwtService;
+
+$jwt = new JwtService();
+
+$token = $jwt->generate([
+    'sub' => $user->id,
+    'email' => $user->email,
+    'permissions' => ['user.read', 'user.write'],
+], 'web-admin');
+```
+
+The service automatically adds:
+
+- `iat`
+- `exp`
+- `device_id`
+
+If `device_id` is not provided, the service generates one automatically.
+
+---
+
+## Validate Token
+
+```php
+use Keysoft\HelperLibrary\Http\Jwt\Exceptions\JwtException;
+use Keysoft\HelperLibrary\Http\Jwt\Services\JwtService;
+
+$jwt = new JwtService();
+
+try {
+    $payload = $jwt->validate($token);
+} catch (JwtException $e) {
+    return response()->json([
+        'message' => $e->getMessage(),
+    ], 401);
+}
+```
+
+Possible validation messages:
+
+- `Token expired`
+- `Invalid token signature`
+- `Invalid token`
+- `Token revoked`
+
+---
+
+## Refresh Token
+
+```php
+use Keysoft\HelperLibrary\Http\Jwt\Services\JwtService;
+
+$jwt = new JwtService();
+$newToken = $jwt->refresh($token);
+```
+
+Refresh flow:
+
+1. The current token is validated.
+2. The token age is checked against `refresh_ttl`.
+3. The old token is blacklisted.
+4. A new token is generated with the same payload and `device_id`.
+
+---
+
+## Revoke Token
+
+To revoke a token manually:
+
+```php
+use Keysoft\HelperLibrary\Http\Jwt\Services\JwtService;
+
+$jwt = new JwtService();
+$jwt->blacklist($token);
+```
+
+---
+
+## Permissions
+
+Store permissions in the payload:
+
+```php
+$token = $jwt->generate([
+    'sub' => $user->id,
+    'permissions' => ['orders.read', 'orders.create'],
+]);
+```
+
+Check them later:
+
+```php
+$permissions = $jwt->getPermissions($token);
+$canCreateOrder = $jwt->hasPermission($token, 'orders.create');
+```
+
+---
+
+## Middleware Usage
+
+The package provides `JwtMiddleware` to validate bearer tokens on incoming requests.
+
+Example route usage:
+
+```php
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Keysoft\HelperLibrary\Http\Middleware\JwtMiddleware;
+
+Route::middleware([JwtMiddleware::class])->group(function () {
+    Route::get('/profile', function (Request $request) {
+        return response()->json([
+            'payload' => $request->attributes->get('jwt_payload'),
+            'permissions' => $request->attributes->get('jwt_permissions', []),
+        ]);
+    });
+});
+```
+
+Expected header:
+
+```http
+Authorization: Bearer your-jwt-token
+```
+
+After successful validation, the middleware stores:
+
+- `jwt_payload`
+- `jwt_permissions`
+
+inside the request attributes.
+
+---
+
+## Typical Login Flow
+
+```php
+use Illuminate\Http\Request;
+use Keysoft\HelperLibrary\Http\Jwt\Exceptions\JwtException;
+use Keysoft\HelperLibrary\Http\Jwt\Services\JwtService;
+
+class AuthController
+{
+    public function login(Request $request)
+    {
+        $jwt = new JwtService();
+
+        $token = $jwt->generate([
+            'sub' => 1,
+            'email' => 'user@example.com',
+            'permissions' => ['profile.read'],
+        ], 'mobile-app');
+
+        return response()->json([
+            'token' => $token,
+            'type' => 'Bearer',
+        ]);
+    }
+
+    public function refresh(Request $request)
+    {
+        $jwt = new JwtService();
+
+        try {
+            $token = $jwt->refresh($request->bearerToken());
+
+            return response()->json([
+                'token' => $token,
+                'type' => 'Bearer',
+            ]);
+        } catch (JwtException $e) {
+            return response()->json([
+                'message' => $e->getMessage(),
+            ], 401);
+        }
+    }
+}
 ```
 
 ---
