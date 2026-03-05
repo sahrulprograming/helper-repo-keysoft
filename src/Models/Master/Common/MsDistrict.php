@@ -3,9 +3,9 @@
 namespace Keysoft\HelperLibrary\Models\Master\Common;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
 
-class MsDistrict extends Model
+class MsDistrict extends BaseModelTenant
 {
     use HasFactory;
 

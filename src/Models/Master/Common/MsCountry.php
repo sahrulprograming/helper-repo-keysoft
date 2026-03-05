@@ -3,9 +3,9 @@
 namespace Keysoft\HelperLibrary\Models\Master\Common;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
 
-class MsCountry extends Model
+class MsCountry extends BaseModelTenant
 {
     use HasFactory;
 

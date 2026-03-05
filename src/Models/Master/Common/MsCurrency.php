@@ -3,9 +3,9 @@
 namespace Keysoft\HelperLibrary\Models\Master\Common;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
 
-class MsCurrency extends Model
+class MsCurrency extends BaseModelTenant
 {
     use HasFactory;
 
