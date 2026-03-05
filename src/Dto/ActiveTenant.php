@@ -38,7 +38,17 @@ class ActiveTenant
 
     public static function fromPayload(array $payload): ?self
     {
-        $tenant = $payload['extra']['tenant'] ?? null;
+        $extra = $payload['extra'] ?? null;
+
+        if (is_object($extra)) {
+            $extra = (array) $extra;
+        }
+
+        $tenant = is_array($extra) ? ($extra['tenant'] ?? null) : null;
+
+        if (is_object($tenant)) {
+            $tenant = (array) $tenant;
+        }
 
         if ($dto = self::fromArray($tenant)) {
             return $dto;

@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Traits;
+namespace Keysoft\HelperLibrary\Traits;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Keysoft\HelperLibrary\Models\Tenant\MsUser;
 
 trait AuditedBy
 {
@@ -99,7 +99,7 @@ trait AuditedBy
 
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(MsUser::class, 'created_by');
     }
 
     public function getCreatorNameAttribute()
@@ -109,7 +109,7 @@ trait AuditedBy
 
     public function updatedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->belongsTo(MsUser::class, 'updated_by');
     }
 
     public function getUpdatedNameAttribute()
@@ -119,7 +119,7 @@ trait AuditedBy
 
     public function deletedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'deleted_by');
+        return $this->belongsTo(MsUser::class, 'deleted_by');
     }
 
     public function getDeletedNameAttribute()

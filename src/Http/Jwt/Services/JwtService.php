@@ -51,7 +51,9 @@ class JwtService
         $this->checkBlacklist($token);
 
         try {
-            return (array) JWT::decode($token, new Key($this->secret, $this->algorithm));
+            $decoded = JWT::decode($token, new Key($this->secret, $this->algorithm));
+
+            return (array) $this->normalizeClaims($decoded);
         } catch (ExpiredException) {
             throw new JwtException('Token expired');
         } catch (SignatureInvalidException) {
@@ -166,5 +168,22 @@ class JwtService
     public function hasPermission(string $token, string $permission): bool
     {
         return in_array($permission, $this->getPermissions($token));
+    }
+
+    protected function normalizeClaims(mixed $value): mixed
+    {
+        if (is_object($value)) {
+            $value = (array) $value;
+        }
+
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        foreach ($value as $key => $item) {
+            $value[$key] = $this->normalizeClaims($item);
+        }
+
+        return $value;
     }
 }
