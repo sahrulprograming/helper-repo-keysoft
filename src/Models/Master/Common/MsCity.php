@@ -4,10 +4,11 @@ namespace Keysoft\HelperLibrary\Models\Master\Common;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
 class MsCity extends BaseModelTenant
 {
-    use HasFactory;
+    use HasFactory, AuditedBy;
 
     protected $connection= 'tenant';
     protected $table = 'ms_city';
