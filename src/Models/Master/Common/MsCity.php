@@ -5,12 +5,12 @@ namespace Keysoft\HelperLibrary\Models\Master\Common;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MsDistrict extends Model
+class MsCity extends Model
 {
     use HasFactory;
 
     protected $connection= 'tenant';
-    protected $table = 'ms_district';
+    protected $table = 'ms_city';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
@@ -18,13 +18,13 @@ class MsDistrict extends Model
 
     protected $guarded = ['created_at', 'updated_at'];
 
-    public function city()
+    public function province()
     {
-        return $this->belongsTo(MsCity::class, 'city_id');
+        return $this->belongsTo(MsProvince::class, 'province_id');
     }
 
-    public function subDistricts()
+    public function districts()
     {
-        return $this->hasMany(MsSubDistrict::class, 'district_id');
+        return $this->hasMany(MsDistrict::class, 'city_id');
     }
 }

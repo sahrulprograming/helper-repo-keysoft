@@ -23,8 +23,8 @@ class MsProvince extends Model
         return $this->belongsTo(MsCountry::class, 'country_id');
     }
 
-    public function districts()
+    public function cities()
     {
-        return $this->hasMany(MsDistrict::class, 'province_id');
+        return $this->hasMany(MsCity::class, 'province_id');
     }
 }
