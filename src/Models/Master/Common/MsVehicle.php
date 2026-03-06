@@ -3,10 +3,10 @@
 namespace Keysoft\HelperLibrary\Models\Master\Common;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsVehicle extends Model
+class MsVehicle extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
 

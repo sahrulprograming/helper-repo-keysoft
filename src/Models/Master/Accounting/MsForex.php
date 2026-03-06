@@ -2,14 +2,15 @@
 
 namespace App\Models\Master\Accounting;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\Master\Common\MsCurrency;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsForex extends Model
+class MsForex extends BaseModelTenant
 {
-    use HasFactory;
-    protected $connection = 'pgsql';
+    use HasFactory, AuditedBy;
+    protected $connection = 'tenant';
     protected $table = 'trans_rate_policy';
 
     protected $primaryKey = 'id';

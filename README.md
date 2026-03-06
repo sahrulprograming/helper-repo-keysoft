@@ -604,6 +604,21 @@ src/
 
 ---
 
+# 🧩 Model Requirements
+
+All shared models must follow this structure:
+
+```php
+class ExampleModel extends BaseModelTenant
+{
+    use HasFactory, AuditedBy;
+
+    protected $connection = 'tenant';
+}
+```
+
+---
+
 # 🔐 Security Design
 
 * No exception thrown (prevents stack traces in production)

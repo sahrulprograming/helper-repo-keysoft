@@ -2,11 +2,15 @@
 
 namespace App\Models\Accounting;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsAutoJournalDT extends Model
+class MsAutoJournalDT extends BaseModelTenant
 {
-    protected $connection = 'pgsql';
+    use HasFactory, AuditedBy;
+    
+    protected $connection = 'tenant';
     protected $table = 'ms_auto_journal_dt';
     protected $guarded = ['id'];
     public $timestamps = false;

@@ -2,15 +2,17 @@
 
 namespace App\Models\Master\Accounting;
 
-use App\Models\Master\Common\MsCurrency;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User\Supplier\MsSupplierShipment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Models\Master\Common\MsCurrency;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsCOA extends Model
+class MsCOA extends BaseModelTenant
 {
-    use HasFactory;
-    protected $connection = 'pgsql';
+    use HasFactory, AuditedBy;
+    
+    protected $connection = 'tenant';
     protected $table = 'ms_coa';
 
     protected $primaryKey = 'id';
@@ -39,13 +41,13 @@ class MsCOA extends Model
         return $this->belongsTo(MsCategoryCOA::class, 'ms_category_coa_id');
     }
 
-    public function shipmentAccount()
-    {
-        return $this->hasMany(MsSupplierShipment::class, 'shipment_account_no', 'account_no');
-    }
+    // public function shipmentAccount()
+    // {
+    //     return $this->hasMany(MsSupplierShipment::class, 'shipment_account_no', 'account_no');
+    // }
 
-    public function clearanceAccount()
-    {
-        return $this->hasMany(MsSupplierShipment::class, 'clearance_account_no', 'account_no');
-    }
+    // public function clearanceAccount()
+    // {
+    //     return $this->hasMany(MsSupplierShipment::class, 'clearance_account_no', 'account_no');
+    // }
 }

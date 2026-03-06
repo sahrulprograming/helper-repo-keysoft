@@ -5,13 +5,14 @@ namespace App\Models\Master\Inventory;
 use App\Models\MsDivision;
 use App\Models\MsEmployee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsWarehouse extends Model
+class MsWarehouse extends BaseModelTenant
 {
-    use HasFactory;
+    use HasFactory, AuditedBy;
 
-    protected $connection = 'pgsql';
+    protected $connection = 'tenant';
     protected $table = 'ms_warehouse';
 
     protected $primaryKey = 'id';

@@ -2,13 +2,15 @@
 
 namespace App\Models\Master\Accounting;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsCategoryCOA extends Model
+class MsCategoryCOA extends BaseModelTenant
 {
-    use HasFactory;
-    protected $connection = 'pgsql';
+    use HasFactory, AuditedBy;
+    
+    protected $connection = 'tenant';
     protected $table = 'ms_category_coa';
 
     protected $primaryKey = 'id';

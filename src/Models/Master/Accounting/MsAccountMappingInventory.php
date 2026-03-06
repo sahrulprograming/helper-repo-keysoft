@@ -2,7 +2,9 @@
 
 namespace App\Models\Master\Accounting;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
 /**
  * Class Ms_User
@@ -13,9 +15,11 @@ use Illuminate\Database\Eloquent\Model;
  * @package App\Models
  */
 
-class MsAccountMappingInventory extends Model
+class MsAccountMappingInventory extends BaseModelTenant
 {
-    protected $connection= 'pgsql';
+    use HasFactory, AuditedBy;
+    
+    protected $connection= 'tenant';
     protected $table = 'ms_account_mapping_inventory';
 
     protected $primaryKey = 'id';

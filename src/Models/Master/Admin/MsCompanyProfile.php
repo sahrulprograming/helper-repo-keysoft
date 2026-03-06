@@ -2,13 +2,17 @@
 
 namespace App\Models\Master\Admin;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\Master\Common\MsCountry;
 use Keysoft\HelperLibrary\Models\Master\Common\MsCurrency;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsCompanyProfile extends Model
+class MsCompanyProfile extends BaseModelTenant
 {
-    protected $connection = 'pgsql';
+    use HasFactory, AuditedBy;
+    
+    protected $connection = 'tenant';
     protected $table = 'ms_company_profile';
     protected $primaryKey = 'id';
     public $incrementing = true;
