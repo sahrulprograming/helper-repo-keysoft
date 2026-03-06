@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Master\Accounting;
+namespace Keysoft\HelperLibrary\Models\Master\Accounting;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;

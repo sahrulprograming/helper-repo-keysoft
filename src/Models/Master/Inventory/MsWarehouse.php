@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Master\Inventory;
+namespace Keysoft\HelperLibrary\Models\Master\Inventory;
 
 use App\Models\MsDivision;
 use App\Models\MsEmployee;

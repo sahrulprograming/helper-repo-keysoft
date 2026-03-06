@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Master\Admin;
+namespace Keysoft\HelperLibrary\Models\Master\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\Master\Common\MsCountry;
