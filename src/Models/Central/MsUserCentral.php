@@ -1,16 +1,13 @@
 <?php
 
 
-namespace Keysoft\HelperLibrary\Models;
+namespace Keysoft\HelperLibrary\Models\Central;
 
-use App\Traits\AuditedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class MsUser extends Model
+class MsUserCentral extends Model
 {
-    use AuditedBy;
-
     protected $table = 'ms_users';
     public const PIVOT_USER_TENANT_TABLE_NAME = 'pivot_user_tenant';
 
@@ -24,7 +21,7 @@ class MsUser extends Model
     public function tenants(): belongsToMany
     {
         return $this->belongsToMany(
-            MsTenant::class,
+            MsTenantCentral::class,
             self::PIVOT_USER_TENANT_TABLE_NAME, // Nama tabel pivot
             'user_id',                 // Foreign key model ini di pivot
             'tenant_id'             // Foreign key model tujuan di pivot

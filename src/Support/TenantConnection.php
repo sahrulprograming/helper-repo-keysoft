@@ -5,7 +5,7 @@ namespace Keysoft\HelperLibrary\Support;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Keysoft\HelperLibrary\Dto\ActiveTenant;
-use Keysoft\HelperLibrary\Models\MsTenant;
+use Keysoft\HelperLibrary\Models\Central\MsTenantCentral;
 
 class TenantConnection
 {
@@ -25,7 +25,7 @@ class TenantConnection
             return;
         }
 
-        $model = MsTenant::where('code', $tenant->code)->first();
+        $model = MsTenantCentral::where('code', $tenant->code)->first();
 
         if (!$model) {
             return;

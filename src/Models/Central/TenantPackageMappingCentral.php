@@ -1,14 +1,12 @@
 <?php
 
-namespace Keysoft\HelperLibrary\Models;
+namespace Keysoft\HelperLibrary\Models\Central;
 
-use App\Traits\AuditedBy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TenantPackageMapping extends Model
 {
-    use AuditedBy;
 
     protected $table = 'tenant_package_mapping';
 
@@ -20,11 +18,11 @@ class TenantPackageMapping extends Model
 
     public function tenant(): BelongsTo
     {
-        return $this->belongsTo(MsTenant::class, 'tenant_id');
+        return $this->belongsTo(MsTenantCentral::class, 'tenant_id');
     }
 
     public function package(): BelongsTo
     {
-        return $this->belongsTo(MsPackage::class, 'package_id');
+        return $this->belongsTo(MsPackageCentral::class, 'package_id');
     }
 }
