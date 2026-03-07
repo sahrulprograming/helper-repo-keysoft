@@ -2,7 +2,9 @@
 
 namespace Keysoft\HelperLibrary\Models\WebBuilder;
 
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Models\Tenant\MsOrgHierarchy;
 
@@ -65,5 +67,15 @@ class WbPage extends BaseModelTenant
             ->wherePivot('type', MsOrgHierarchy::SOURCE_TYPE_PAGE)
             ->withPivotValue('type', MsOrgHierarchy::SOURCE_TYPE_PAGE)
             ->withPivot(['type']);
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(self::class, 'parent_id');
     }
 }
