@@ -20,10 +20,6 @@ class HelperLibraryServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        if (! app()->runningInConsole()) {
-            return;
-        }
-
         if (! $this->app->runningInConsole()) {
             return;
         }
