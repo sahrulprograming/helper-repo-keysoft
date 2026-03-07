@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Schema;
 use InvalidArgumentException;
-use Keysoft\HelperLibrary\Models\MsTenantCentral;
+use Keysoft\HelperLibrary\Models\Central\MsTenantCentral;
 use RuntimeException;
 use Symfony\Component\Finder\SplFileInfo;
 

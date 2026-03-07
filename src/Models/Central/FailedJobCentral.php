@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace Keysoft\HelperLibrary\Models\Central;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;

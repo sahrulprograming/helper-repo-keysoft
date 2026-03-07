@@ -1,6 +1,6 @@
 <?php
 
-namespace Keysoft\HelperLibrary\Models;
+namespace Keysoft\HelperLibrary\Models\Central;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;

@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use Keysoft\HelperLibrary\Models\MsUserCentral as CentralMsUser;
+use Keysoft\HelperLibrary\Models\Central\MsUserCentral as CentralMsUser;
 use Keysoft\HelperLibrary\Models\Tenant\MsUser as TenantMsUser;
 
 class TenantUserOuterSynchronizer

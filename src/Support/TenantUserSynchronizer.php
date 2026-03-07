@@ -4,8 +4,8 @@ namespace Keysoft\HelperLibrary\Support;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
-use Keysoft\HelperLibrary\Models\MsTenantCentral;
-use Keysoft\HelperLibrary\Models\MsUserCentral as CentralMsUser;
+use Keysoft\HelperLibrary\Models\Central\MsTenantCentral;
+use Keysoft\HelperLibrary\Models\Central\MsUserCentral as CentralMsUser;
 use Keysoft\HelperLibrary\Models\Tenant\MsUser as TenantMsUser;
 
 class TenantUserSynchronizer

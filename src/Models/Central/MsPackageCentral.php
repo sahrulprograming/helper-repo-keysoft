@@ -1,6 +1,6 @@
 <?php
 
-namespace Keysoft\HelperLibrary\Models;
+namespace Keysoft\HelperLibrary\Models\Central;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

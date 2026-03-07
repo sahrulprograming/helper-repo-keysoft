@@ -5,7 +5,7 @@ namespace Keysoft\HelperLibrary\Support;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Keysoft\HelperLibrary\Dto\ActiveTenant;
-use Keysoft\HelperLibrary\Models\MsTenantCentral;
+use Keysoft\HelperLibrary\Models\Central\MsTenantCentral;
 
 class TenantConnection
 {
