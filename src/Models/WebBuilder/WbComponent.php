@@ -4,6 +4,7 @@ namespace Keysoft\HelperLibrary\Models\WebBuilder;
 
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Models\Tenant\MsOrgHierarchy;
 
 class WbComponent extends BaseModelTenant
 {
@@ -91,5 +92,18 @@ class WbComponent extends BaseModelTenant
         }
 
         return $this;
+    }
+
+    public function msOrgHierarchies(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            MsOrgHierarchy::class,
+            MsOrgHierarchy::PIVOT_WB_SOURCE_TABLE_NAME,
+            'ref_id',
+            'org_hierarchy_id',
+        )
+            ->wherePivot('type', MsOrgHierarchy::SOURCE_TYPE_PAGE)
+            ->withPivotValue('type', MsOrgHierarchy::SOURCE_TYPE_PAGE)
+            ->withPivot(['type']);
     }
 }
