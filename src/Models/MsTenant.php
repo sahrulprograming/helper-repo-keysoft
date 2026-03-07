@@ -2,12 +2,12 @@
 
 namespace Keysoft\HelperLibrary\Models;
 
-use App\Traits\AuditedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Keysoft\HelperLibrary\Support\GeneralCipher;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 use RuntimeException;
 
 class MsTenant extends Model

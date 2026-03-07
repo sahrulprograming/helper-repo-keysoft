@@ -7,6 +7,7 @@ use Keysoft\HelperLibrary\Dto\ActiveTenant;
 use Keysoft\HelperLibrary\Http\Jwt\Exceptions\JwtException;
 use Keysoft\HelperLibrary\Http\Jwt\Services\JwtService;
 use Keysoft\HelperLibrary\Http\Utils\ResponseFormatter;
+use Keysoft\HelperLibrary\Support\TenantConnection;
 
 class JwtMiddleware
 {
@@ -27,6 +28,7 @@ class JwtMiddleware
             if ($activeTenant = ActiveTenant::fromPayload($payload)) {
                 $activeTenant->toSession();
                 $request->attributes->set('active_tenant', $activeTenant->toArray());
+                TenantConnection::set();
             }else{
                 return ResponseFormatter::error("Invalid extra data token", 401, $payload)->toResponse();
             }
