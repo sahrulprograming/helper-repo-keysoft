@@ -26,6 +26,9 @@ class WbPage extends BaseModelTenant
     protected $guarded = ['id'];
 
     protected $casts = [
+        'category_id' => 'integer',
+        'parent_id' => 'integer',
+        'sort_order' => 'integer',
         'middleware' => 'array',
         'config' => 'array',
     ];
@@ -77,5 +80,10 @@ class WbPage extends BaseModelTenant
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(WbPageCategory::class, 'category_id');
     }
 }
