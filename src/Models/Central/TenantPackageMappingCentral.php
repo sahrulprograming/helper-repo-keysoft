@@ -5,7 +5,7 @@ namespace Keysoft\HelperLibrary\Models\Central;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class TenantPackageMapping extends Model
+class TenantPackageMappingCentral extends Model
 {
 
     protected $table = 'tenant_package_mapping';
