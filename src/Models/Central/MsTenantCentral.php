@@ -10,10 +10,8 @@ use Keysoft\HelperLibrary\Support\GeneralCipher;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 use RuntimeException;
 
-class MsTenant extends Model
+class MsTenantCentral extends Model
 {
-    use AuditedBy;
-
     protected $table = 'ms_tenant';
 
     protected $guarded = [
@@ -34,13 +32,13 @@ class MsTenant extends Model
     // Relasi ke User
     public function users(): HasMany
     {
-        return $this->hasMany(MsUser::class, 'tenant_id');
+        return $this->hasMany(MsUserCentral::class, 'tenant_id');
     }
 
     // Relasi Many-to-Many ke Package
     public function packages(): BelongsToMany
     {
-        return $this->belongsToMany(MsPackage::class, 'tenant_package_mapping', 'tenant_id', 'package_id')
+        return $this->belongsToMany(MsPackageCentral::class, 'tenant_package_mapping', 'tenant_id', 'package_id')
                     ->withPivot('status', 'expired_at')
                     ->withTimestamps();
     }

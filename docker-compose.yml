@@ -1,0 +1,22 @@
+services:
+  composer:
+    image: composer:2
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      COMPOSER_HOME: /tmp/composer
+      COMPOSER_ALLOW_SUPERUSER: "1"
+      GIT_CONFIG_COUNT: "1"
+      GIT_CONFIG_KEY_0: safe.directory
+      GIT_CONFIG_VALUE_0: /app
+    entrypoint: ["composer"]
+    command: ["--version"]
+
+  php:
+    image: php:8.3-cli
+    working_dir: /app
+    volumes:
+      - ./:/app
+    entrypoint: ["php"]
+    command: ["-v"]
