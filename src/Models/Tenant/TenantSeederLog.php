@@ -1,6 +1,6 @@
 <?php
 
-namespace Keysoft\HelperLibrary\Models;
+namespace Keysoft\HelperLibrary\Models\Tenant;
 
 use Illuminate\Database\Eloquent\Model;
 
