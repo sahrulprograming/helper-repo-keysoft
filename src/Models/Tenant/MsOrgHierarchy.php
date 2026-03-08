@@ -14,8 +14,8 @@ class MsOrgHierarchy extends BaseModelTenant
     public const TABLE_NAME = 'ms_org_hierarchy';
     public const PIVOT_WB_SOURCE_TABLE_NAME = 'pivot_wb_source_org_hierarchy';
     public const PIVOT_USER_TABLE_NAME = 'pivot_user_org_hierarchy';
-    public const SOURCE_TYPE_PAGE = 'wb_page';
-    public const SOURCE_TYPE_COMPONENT = 'wb_component';
+    public const SOURCE_TYPE_PAGE = 'wb_pages';
+    public const SOURCE_TYPE_COMPONENT = 'wb_components';
 
     protected $table = self::TABLE_NAME;
 
