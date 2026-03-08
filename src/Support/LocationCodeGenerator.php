@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Support;
+namespace Keysoft\HelperLibrary\Support;
 
 use Illuminate\Support\Str;
 
