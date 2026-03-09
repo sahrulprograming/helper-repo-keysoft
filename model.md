@@ -21,7 +21,7 @@ Setiap model wajib punya:
 ```php
 <?php
 
-namespace Keysoft\HelperLibrary\Models\Master\Common;
+namespace Keysoft\HelperLibrary\Models\Tenant\Master\Common;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
@@ -44,5 +44,5 @@ class MsCountry extends BaseModelTenant
 
 ## Namespace Rules
 
-- Namespace harus mengikuti struktur folder. Contoh: `src/Models/Master/Accounting/MsCOA.php` -> `namespace Keysoft\HelperLibrary\Models\Master\Accounting;`
+- Namespace harus mengikuti struktur folder. Contoh: `src/Models/Master/Accounting/MsCOA.php` -> `namespace Keysoft\HelperLibrary\Models\Tenant\Master\Accounting;`
 - Jangan gunakan `App\Models` di package ini.
