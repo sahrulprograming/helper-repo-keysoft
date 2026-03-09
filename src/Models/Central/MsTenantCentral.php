@@ -54,16 +54,37 @@ class MsTenantCentral extends Model
             return $value;
         }
 
-        $cipher = $this->cipher();
-
-        if (! $cipher->isEncrypted($value)) {
-            return $value;
-        }
-
         try {
-            return $cipher->decrypt($value);
+            $cipher = $this->cipher();
+
+            if ($cipher->isEncrypted($value)) {
+                return $cipher->decrypt($value);
+            }
+
+            $prefix = $this->detectCipherPrefix($value);
+
+            if ($prefix === null) {
+                return $value;
+            }
+
+            return (new GeneralCipher(prefix: $prefix))->decrypt($value);
         } catch (RuntimeException) {
             return $value;
         }
+    }
+
+    protected function detectCipherPrefix(string $value): ?string
+    {
+        if (substr_count($value, ':') < 3) {
+            return null;
+        }
+
+        $prefix = trim((string) strtok($value, ':'));
+
+        if ($prefix === '' || str_contains($prefix, ' ')) {
+            return null;
+        }
+
+        return $prefix;
     }
 }

@@ -4,7 +4,7 @@ namespace Keysoft\HelperLibrary\Models\Tenant\Master\Admin;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
-use Keysoft\HelperLibrary\Models\Master\Common\MsCountry;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCountry;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCurrency;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
