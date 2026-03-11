@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models\Master\Inventory;
+namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsPartSpecification extends Model
+class MsPartSpecification extends BaseModelTenant
 {
-    use HasFactory;
+    use HasFactory, AuditedBy;
 
-    protected $connection = 'pgsql';
+    protected $connection = 'tenant';
     protected $table = 'ms_part_specification';
 
     protected $primaryKey = 'id';

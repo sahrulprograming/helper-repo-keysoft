@@ -1,35 +1,35 @@
 <?php
 
-namespace App\Models\Master\Inventory;
+namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class Inventory extends Model
+class Inventory extends BaseModelTenant
 {
-    use HasFactory;
+    use HasFactory, AuditedBy;
 
-    protected $connection= 'pgsql';
+    protected $connection = 'tenant';
     protected $table = 'inventory';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    protected $primaryKey = 'id';
+    public $incrementing = true;
+    protected $keyType = 'integer';
+
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
-        'qty' => 'double'
+        'qty' => 'double',
     ];
 
     public function part()
     {
-        return $this->belongsTo(MsPart::class, 'part_id');
+        return $this->belongsTo(MsPart::class, 'part_id', 'id');
     }
 
     public function warehouse()
     {
-        return $this->belongsTo(MsWarehouse::class, 'warehouse_id');
+        return $this->belongsTo(MsWarehouse::class, 'warehouse_id', 'id');
     }
 }

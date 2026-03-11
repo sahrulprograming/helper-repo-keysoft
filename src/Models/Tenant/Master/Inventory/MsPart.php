@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Models\Master\Inventory;
+namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
-use App\Models\Master\Buku\BukuStock;
-use App\Models\Inventory\MsPartVariant;
-use App\Models\Inventory\PartStandard;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsPart extends Model
+class MsPart extends BaseModelTenant
 {
-    use HasFactory;
+    use HasFactory, AuditedBy;
 
-    protected $connection = 'pgsql';
+    protected $connection = 'tenant';
     protected $table = 'ms_part';
 
     protected $primaryKey = 'id';
@@ -23,27 +21,27 @@ class MsPart extends Model
 
     public function inventoryType()
     {
-        return $this->belongsTo(MsInventoryType::class, 'inventory_type_id');
+        return $this->belongsTo(MsInventoryType::class, 'inventory_type_id', 'id');
     }
 
     public function category()
     {
-        return $this->belongsTo(MsPartCategory::class, 'category_id');
+        return $this->belongsTo(MsPartCategory::class, 'category_id', 'id');
     }
 
     public function brand()
     {
-        return $this->belongsTo(MsPartBrand::class, 'brand_id');
+        return $this->belongsTo(MsPartBrand::class, 'brand_id', 'id');
     }
 
     public function specification()
     {
-        return $this->belongsTo(MsPartSpecification::class, 'specification_id');
+        return $this->belongsTo(MsPartSpecification::class, 'specification_id', 'id');
     }
 
     public function variant()
     {
-        return $this->belongsTo(MsPartVariant::class, 'variant_id');
+        return $this->belongsTo(MsPartVariant::class, 'variant_id', 'id');
     }
 
     public function warehouse()
@@ -53,26 +51,21 @@ class MsPart extends Model
 
     public function type()
     {
-        return $this->belongsTo(MsPartType::class, 'type_id');
+        return $this->belongsTo(MsPartType::class, 'type_id', 'id');
     }
 
     public function units()
     {
-        return $this->hasMany(MsPartUnit::class, 'part_id');
+        return $this->hasMany(MsPartUnit::class, 'part_id', 'id');
     }
 
     public function mainUnit()
     {
-        return $this->hasOne(MsPartUnit::class, 'part_id')->where('sequence', 1);
+        return $this->hasOne(MsPartUnit::class, 'part_id', 'id')->where('sequence', 1);
     }
 
     public function standards()
     {
-        return $this->hasMany(PartStandard::class, 'part_id');
-    }
-
-    public function stocks()
-    {
-        return $this->hasMany(BukuStock::class, 'part_id', 'id');
+        return $this->hasMany(MsPartStandard::class, 'part_id', 'id');
     }
 }

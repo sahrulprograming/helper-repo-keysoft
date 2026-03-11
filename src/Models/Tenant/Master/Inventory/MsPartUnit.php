@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Models\Master\Inventory;
+namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsPartUnit extends Model
+class MsPartUnit extends BaseModelTenant
 {
-    use HasFactory;
+    use HasFactory, AuditedBy;
 
-    protected $connection = 'pgsql';
+    protected $connection = 'tenant';
     protected $table = 'ms_part_unit';
 
     protected $primaryKey = 'id';
@@ -24,16 +25,16 @@ class MsPartUnit extends Model
 
     public function part()
     {
-        return $this->belongsTo(MsPart::class, 'part_id');
+        return $this->belongsTo(MsPart::class, 'part_id', 'id');
     }
 
     public function unit1()
     {
-        return $this->belongsTo(MsUnit::class, 'unit_id1');
+        return $this->belongsTo(MsUnit::class, 'unit_id1', 'id');
     }
 
     public function unit2()
     {
-        return $this->belongsTo(MsUnit::class, 'unit_id2');
+        return $this->belongsTo(MsUnit::class, 'unit_id2', 'id');
     }
 }

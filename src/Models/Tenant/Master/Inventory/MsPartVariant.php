@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Models\Inventory;
+namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsPartVariant extends Model
+class MsPartVariant extends BaseModelTenant
 {
-    protected $connection = 'pgsql';
+    use HasFactory, AuditedBy;
+
+    protected $connection = 'tenant';
     protected $table = 'ms_part_variant';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'integer';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $guarded = ['created_at', 'updated_at'];
 }

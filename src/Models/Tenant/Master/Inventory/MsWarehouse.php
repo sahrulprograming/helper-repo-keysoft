@@ -2,8 +2,6 @@
 
 namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
-use App\Models\MsDivision;
-use App\Models\MsEmployee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
