@@ -6,20 +6,21 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsCategoryCOA extends BaseModelTenant
+class MsAccountType extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
 
     protected $connection = 'tenant';
-    protected $table = 'ms_category_coa';
+    protected $table = 'ms_account_type';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
     protected $keyType = 'integer';
+
     protected $guarded = ['created_at', 'updated_at'];
 
     public function coas()
     {
-        return $this->hasMany(MsCOA::class, 'category_id');
+        return $this->hasMany(MsCOA::class, 'account_type_id');
     }
 }

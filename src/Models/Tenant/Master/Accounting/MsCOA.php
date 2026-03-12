@@ -16,18 +16,22 @@ class MsCOA extends BaseModelTenant
 
     protected $primaryKey = 'id';
     public $incrementing = true;
-    protected $keyType = 'int';
+    protected $keyType = 'integer';
+    protected $guarded = ['created_at', 'updated_at'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    public function accountType()
+    {
+        return $this->belongsTo(MsAccountType::class, 'account_type_id');
+    }
+
+    public function bank()
+    {
+        return $this->belongsTo(MsBank::class, 'bank_id');
+    }
 
     public function currency()
     {
-        return $this->belongsTo(MsCurrency::class, 'ms_currency_id');
+        return $this->belongsTo(MsCurrency::class, 'currency_id');
     }
 
     public function parent()
@@ -35,18 +39,28 @@ class MsCOA extends BaseModelTenant
         return $this->belongsTo(MsCOA::class, 'parent_id');
     }
 
-    public function category()
+    public function children()
     {
-        return $this->belongsTo(MsCategoryCOA::class, 'ms_category_coa_id');
+        return $this->hasMany(MsCOA::class, 'parent_id');
     }
 
-    // public function shipmentAccount()
-    // {
-    //     return $this->hasMany(MsSupplierShipment::class, 'shipment_account_no', 'account_no');
-    // }
+    public function category()
+    {
+        return $this->belongsTo(MsCategoryCOA::class, 'category_id');
+    }
 
-    // public function clearanceAccount()
-    // {
-    //     return $this->hasMany(MsSupplierShipment::class, 'clearance_account_no', 'account_no');
-    // }
+    public function accountMappingTypes()
+    {
+        return $this->hasMany(MsAccountMappingType::class, 'coa_id');
+    }
+
+    public function accountMappings()
+    {
+        return $this->hasMany(MsAccountMapping::class, 'coa_id');
+    }
+
+    public function accountMappingInventories()
+    {
+        return $this->hasMany(MsAccountMappingInventory::class, 'coa_id');
+    }
 }

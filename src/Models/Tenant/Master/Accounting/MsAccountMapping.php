@@ -19,22 +19,16 @@ class MsAccountMapping extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
 
-    protected $connection= 'tenant';
+    protected $connection = 'tenant';
     protected $table = 'ms_account_mapping';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
-    protected $keyType = 'int';
+    protected $keyType = 'integer';
+    protected $guarded = ['created_at', 'updated_at'];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $guarded = ['id', 'created_at', 'updated_at'];
-
-    public function account()
+    public function coa()
     {
-        return $this->belongsTo(MsCOA::class, 'ms_coa_id');
+        return $this->belongsTo(MsCOA::class, 'coa_id');
     }
 }
