@@ -4,15 +4,15 @@ namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
-use Keysoft\HelperLibrary\Models\Tenant\Master\Users\Supplier\MsSupplier;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Accounting\MsCOA;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsPartSupplier extends BaseModelTenant
+class MsBomHD extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
 
     protected $connection = 'tenant';
-    protected $table = 'ms_part_supplier';
+    protected $table = 'ms_bom_hd';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
@@ -21,7 +21,7 @@ class MsPartSupplier extends BaseModelTenant
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
-        'percentage_order' => 'double',
+        'foh_amount' => 'double',
     ];
 
     public function part()
@@ -29,13 +29,13 @@ class MsPartSupplier extends BaseModelTenant
         return $this->belongsTo(MsPart::class, 'part_id', 'id');
     }
 
-    public function supplier()
+    public function fohCoa()
     {
-        return $this->belongsTo(MsSupplier::class, 'supplier_id', 'id');
+        return $this->belongsTo(MsCOA::class, 'foh_coa_id', 'id');
     }
 
-    public function deliveryUnit()
+    public function details()
     {
-        return $this->belongsTo(MsUnit::class, 'delivery_unit_id', 'id');
+        return $this->hasMany(MsBomDT::class, 'hd_id', 'id');
     }
 }

@@ -1,17 +1,17 @@
 <?php
 
-namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
+namespace Keysoft\HelperLibrary\Models\Tenant\Master\Accounting;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsPartVariant extends BaseModelTenant
+class MsAccountType extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
 
     protected $connection = 'tenant';
-    protected $table = 'ms_part_variant';
+    protected $table = 'ms_account_type';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
@@ -19,8 +19,8 @@ class MsPartVariant extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
-    public function parts()
+    public function coas()
     {
-        return $this->hasMany(MsPart::class, 'variant_id', 'id');
+        return $this->hasMany(MsCOA::class, 'account_type_id');
     }
 }

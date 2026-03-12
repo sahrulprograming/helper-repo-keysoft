@@ -4,8 +4,6 @@ namespace Keysoft\HelperLibrary\Models\Tenant\Master\Users;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
-use Keysoft\HelperLibrary\Models\Tenant\Master\Admin\MsDivisionModuleMapping;
-use Keysoft\HelperLibrary\Models\Tenant\Master\Admin\MsUserPermissionMappingHD;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Inventory\MsWarehouse;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
@@ -27,19 +25,33 @@ class MsDivision extends BaseModelTenant
         return $this->belongsTo(MsDivision::class, 'sub_division_id', 'id');
     }
 
-    public function warehouse()
+    public function childDivisions()
     {
-        return $this->hasOne(MsWarehouse::class, 'division_id', 'id');
+        return $this->hasMany(MsDivision::class, 'sub_division_id', 'id');
     }
 
-    // public function divisionModuleMappings()
-    // {
-    //     return $this->hasMany(MsDivisionModuleMapping::class, 'division_id', 'id')
-    //         ->with('action');
-    // }
+    public function staffInCharge()
+    {
+        return $this->belongsTo(MsEmployee::class, 'staff_in_charge_id', 'id');
+    }
 
-    // public function userPermissionMappings()
-    // {
-    //     return $this->hasMany(MsUserPermissionMappingHD::class, 'division_id', 'id');
-    // }
+    public function contactPerson()
+    {
+        return $this->belongsTo(MsEmployee::class, 'contact_person_id', 'id');
+    }
+
+    public function dayOffApproval()
+    {
+        return $this->belongsTo(MsEmployee::class, 'day_off_approval_id', 'id');
+    }
+
+    public function warehouses()
+    {
+        return $this->hasMany(MsWarehouse::class, 'division_id', 'id');
+    }
+
+    public function employees()
+    {
+        return $this->hasMany(MsEmployee::class, 'division_id', 'id');
+    }
 }

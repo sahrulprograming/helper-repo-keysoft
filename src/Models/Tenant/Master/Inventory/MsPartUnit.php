@@ -28,13 +28,8 @@ class MsPartUnit extends BaseModelTenant
         return $this->belongsTo(MsPart::class, 'part_id', 'id');
     }
 
-    public function unit1()
+    public function unit()
     {
-        return $this->belongsTo(MsUnit::class, 'unit_id1', 'id');
-    }
-
-    public function unit2()
-    {
-        return $this->belongsTo(MsUnit::class, 'unit_id2', 'id');
+        return $this->belongsTo(MsUnit::class, 'unit_id', 'id');
     }
 }

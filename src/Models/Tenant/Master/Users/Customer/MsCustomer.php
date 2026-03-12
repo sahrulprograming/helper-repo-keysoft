@@ -4,7 +4,10 @@ namespace Keysoft\HelperLibrary\Models\Tenant\Master\Users\Customer;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCity;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCountry;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCurrency;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsDistrict;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsProvince;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsSubDistrict;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Users\MsDivision;
@@ -50,9 +53,24 @@ class MsCustomer extends BaseModelTenant
         return $this->belongsTo(MsProvince::class, 'province_id', 'id');
     }
 
+    public function city()
+    {
+        return $this->belongsTo(MsCity::class, 'city_id', 'id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(MsDistrict::class, 'district_id', 'id');
+    }
+
     public function salesman()
     {
         return $this->belongsTo(MsEmployee::class, 'salesman_id', 'id');
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(MsCurrency::class, 'currency_id', 'id');
     }
 
     public function subdistrict()
