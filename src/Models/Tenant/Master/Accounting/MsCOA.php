@@ -63,4 +63,9 @@ class MsCOA extends BaseModelTenant
     {
         return $this->hasMany(MsAccountMappingInventory::class, 'coa_id');
     }
+
+    public function bomHeaders()
+    {
+        return $this->hasMany(\Keysoft\HelperLibrary\Models\Tenant\Master\Inventory\MsBomHD::class, 'foh_coa_id');
+    }
 }

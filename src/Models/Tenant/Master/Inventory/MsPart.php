@@ -74,6 +74,16 @@ class MsPart extends BaseModelTenant
         return $this->hasMany(MsPartSupplier::class, 'part_id', 'id');
     }
 
+    public function bomHeaders()
+    {
+        return $this->hasMany(MsBomHD::class, 'part_id', 'id');
+    }
+
+    public function bomDetails()
+    {
+        return $this->hasMany(MsBomDT::class, 'part_id', 'id');
+    }
+
     public function inventories()
     {
         return $this->hasMany(Inventory::class, 'part_id', 'id');
