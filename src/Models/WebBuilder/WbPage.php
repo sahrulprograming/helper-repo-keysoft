@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Models\Central\MsPackageCentral;
 use Keysoft\HelperLibrary\Models\Tenant\MsOrgHierarchy;
 
 class WbPage extends BaseModelTenant
@@ -13,6 +14,7 @@ class WbPage extends BaseModelTenant
     // --- Database Tables ---
     public const TABLE_NAME                 = 'wb_pages';
     public const PIVOT_COMPONENT_PAGE_TABLE_NAME = 'wb_pivot_page_component';
+    public const PIVOT_PAGE_PACKAGE_TABLE_NAME = 'pivot_pages_outer_package';
 
     // --- Cache Keys ---
     public const CACHE_LIST_KEY             = self::TABLE_NAME . '_list';
@@ -71,6 +73,17 @@ class WbPage extends BaseModelTenant
             ->withPivotValue('type', MsOrgHierarchy::SOURCE_TYPE_PAGE)
             ->withPivot(['type']);
     }
+
+    public function packages(): BelongsToMany 
+    {
+        return $this->belongsToMany(
+            MsPackageCentral::class,
+            self::PIVOT_PAGE_PACKAGE_TABLE_NAME,
+            'page_id',
+            'package_id'
+        );
+    }
+
 
     public function parent(): BelongsTo
     {
