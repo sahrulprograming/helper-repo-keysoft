@@ -18,4 +18,24 @@ class MsUnit extends BaseModelTenant
     protected $keyType = 'integer';
 
     protected $guarded = ['created_at', 'updated_at'];
+
+    public function partUnits()
+    {
+        return $this->hasMany(MsPartUnit::class, 'unit_id', 'id');
+    }
+
+    public function supplierDeliveryUnits()
+    {
+        return $this->hasMany(MsPartSupplier::class, 'delivery_unit_id', 'id');
+    }
+
+    public function volumeParts()
+    {
+        return $this->hasMany(MsPart::class, 'volume_unit_id', 'id');
+    }
+
+    public function weightParts()
+    {
+        return $this->hasMany(MsPart::class, 'weight_unit_id', 'id');
+    }
 }

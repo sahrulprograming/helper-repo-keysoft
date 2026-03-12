@@ -29,10 +29,10 @@ class MsPart extends BaseModelTenant
         return $this->belongsTo(MsPartCategory::class, 'category_id', 'id');
     }
 
-    public function brand()
-    {
-        return $this->belongsTo(MsPartBrand::class, 'brand_id', 'id');
-    }
+    // public function brand()
+    // {
+    //     return $this->belongsTo(MsPartBrand::class, 'brand_id', 'id');
+    // }
 
     public function specification()
     {
@@ -46,7 +46,7 @@ class MsPart extends BaseModelTenant
 
     public function warehouse()
     {
-        return $this->belongsTo(MsWarehouse::class, 'defered_warehouse_id', 'id');
+        return $this->belongsTo(MsWarehouse::class, 'deferred_warehouse_id', 'id');
     }
 
     public function type()
@@ -59,13 +59,23 @@ class MsPart extends BaseModelTenant
         return $this->hasMany(MsPartUnit::class, 'part_id', 'id');
     }
 
-    public function mainUnit()
+    public function volumeUnit()
     {
-        return $this->hasOne(MsPartUnit::class, 'part_id', 'id')->where('sequence', 1);
+        return $this->belongsTo(MsUnit::class, 'volume_unit_id', 'id');
     }
 
-    public function standards()
+    public function weightUnit()
     {
-        return $this->hasMany(MsPartStandard::class, 'part_id', 'id');
+        return $this->belongsTo(MsUnit::class, 'weight_unit_id', 'id');
+    }
+
+    public function suppliers()
+    {
+        return $this->hasMany(MsPartSupplier::class, 'part_id', 'id');
+    }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'part_id', 'id');
     }
 }

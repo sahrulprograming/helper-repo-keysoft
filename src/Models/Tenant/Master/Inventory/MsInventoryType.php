@@ -18,4 +18,9 @@ class MsInventoryType extends BaseModelTenant
     protected $keyType = 'integer';
 
     protected $guarded = ['created_at', 'updated_at'];
+
+    public function parts()
+    {
+        return $this->hasMany(MsPart::class, 'inventory_type_id', 'id');
+    }
 }

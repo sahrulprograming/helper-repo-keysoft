@@ -29,6 +29,21 @@ class MsWarehouse extends BaseModelTenant
         return $this->belongsTo(MsWarehouse::class, 'parent_id', 'id');
     }
 
+    public function children()
+    {
+        return $this->hasMany(MsWarehouse::class, 'parent_id', 'id');
+    }
+
+    public function deferredParts()
+    {
+        return $this->hasMany(MsPart::class, 'deferred_warehouse_id', 'id');
+    }
+
+    public function inventories()
+    {
+        return $this->hasMany(Inventory::class, 'warehouse_id', 'id');
+    }
+
     // public function staffInCharge()
     // {
     //     return $this->belongsTo(MsEmployee::class, 'staff_in_charge_id', 'id');

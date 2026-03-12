@@ -18,4 +18,9 @@ class MsPartVariant extends BaseModelTenant
     protected $keyType = 'integer';
 
     protected $guarded = ['created_at', 'updated_at'];
+
+    public function parts()
+    {
+        return $this->hasMany(MsPart::class, 'variant_id', 'id');
+    }
 }

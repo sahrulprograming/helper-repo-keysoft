@@ -33,4 +33,9 @@ class MsPartSupplier extends BaseModelTenant
     {
         return $this->belongsTo(MsSupplier::class, 'supplier_id', 'id');
     }
+
+    public function deliveryUnit()
+    {
+        return $this->belongsTo(MsUnit::class, 'delivery_unit_id', 'id');
+    }
 }
