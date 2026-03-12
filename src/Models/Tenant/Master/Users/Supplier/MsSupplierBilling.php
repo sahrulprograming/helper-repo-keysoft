@@ -4,6 +4,7 @@ namespace Keysoft\HelperLibrary\Models\Tenant\Master\Users\Supplier;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCity;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsProvince;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
@@ -23,6 +24,11 @@ class MsSupplierBilling extends BaseModelTenant
     public function province()
     {
         return $this->belongsTo(MsProvince::class, 'province_id', 'id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(MsCity::class, 'city_id', 'id');
     }
 
     public function supplier()
