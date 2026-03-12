@@ -10,6 +10,8 @@ class MsPackageCentral extends Model
 
     protected $table = 'ms_packages';
 
+    protected $connection = 'outer';
+
     protected $guarded = [
         'id',
     ];
