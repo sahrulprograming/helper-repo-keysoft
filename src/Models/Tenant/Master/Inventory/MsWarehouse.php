@@ -4,6 +4,8 @@ namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Users\MsDivision;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Users\MsEmployee;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
 class MsWarehouse extends BaseModelTenant
@@ -17,11 +19,6 @@ class MsWarehouse extends BaseModelTenant
     public $incrementing = true;
     protected $keyType = 'integer';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $guarded = ['created_at', 'updated_at'];
 
     public function parent()
@@ -44,13 +41,13 @@ class MsWarehouse extends BaseModelTenant
         return $this->hasMany(Inventory::class, 'warehouse_id', 'id');
     }
 
-    // public function staffInCharge()
-    // {
-    //     return $this->belongsTo(MsEmployee::class, 'staff_in_charge_id', 'id');
-    // }
+    public function staffInCharge()
+    {
+        return $this->belongsTo(MsEmployee::class, 'staff_in_charge_id', 'id');
+    }
 
-    // public function division()
-    // {
-    //     return $this->belongsTo(MsDivision::class, 'division_id', 'id');
-    // }
+    public function division()
+    {
+        return $this->belongsTo(MsDivision::class, 'division_id', 'id');
+    }
 }

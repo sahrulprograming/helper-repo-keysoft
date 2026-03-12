@@ -11,27 +11,21 @@ use Keysoft\HelperLibrary\Traits\AuditedBy;
 class MsCompanyProfile extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
-    
+
     protected $connection = 'tenant';
     protected $table = 'ms_company_profile';
     protected $primaryKey = 'id';
     public $incrementing = true;
-    protected $keyType = 'int';
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $keyType = 'integer';
+    protected $guarded = ['created_at', 'updated_at'];
 
     public function country()
     {
-        return $this->belongsTo(MsCountry::class, 'ms_country_id', 'id');
+        return $this->belongsTo(MsCountry::class, 'country_id', 'id');
     }
 
     public function currency()
     {
-        return $this->belongsTo(MsCurrency::class, 'ms_currency_id', 'id');
+        return $this->belongsTo(MsCurrency::class, 'currency_id', 'id');
     }
 }
