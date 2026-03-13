@@ -19,6 +19,10 @@ class MsAccountType extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function coas()
     {
         return $this->hasMany(MsCOA::class, 'account_type_id');

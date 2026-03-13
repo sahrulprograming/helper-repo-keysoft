@@ -19,6 +19,10 @@ class MsCOA extends BaseModelTenant
     protected $keyType = 'integer';
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function accountType()
     {
         return $this->belongsTo(MsAccountType::class, 'account_type_id');
