@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class PartSerial extends BaseModelTenant
+class MsPartSerial extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
 
     protected $connection = 'tenant';
-    protected $table = 'part_serial';
+    protected $table = 'ms_part_serial';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
