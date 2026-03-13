@@ -19,6 +19,10 @@ class MsSupplierCategory extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function suppliers()
     {
         return $this->hasMany(MsSupplier::class, 'category_id', 'id');

@@ -19,6 +19,10 @@ class MsForex extends BaseModelTenant
     protected $keyType = 'integer';
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function currency()
     {
         return $this->belongsTo(MsCurrency::class, 'currency_id');

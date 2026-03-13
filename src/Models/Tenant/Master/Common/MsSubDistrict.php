@@ -19,6 +19,10 @@ class MsSubDistrict extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function district()
     {
         return $this->belongsTo(MsDistrict::class, 'district_id');

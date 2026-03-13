@@ -21,6 +21,10 @@ class MsWarehouse extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function parent()
     {
         return $this->belongsTo(MsWarehouse::class, 'parent_id', 'id');

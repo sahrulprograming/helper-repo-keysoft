@@ -22,6 +22,10 @@ class MsEmployee extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function division()
     {
         return $this->belongsTo(MsDivision::class, 'division_id', 'id');

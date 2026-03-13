@@ -19,6 +19,10 @@ class MsPartCategory extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function parts()
     {
         return $this->hasMany(MsPart::class, 'category_id', 'id');

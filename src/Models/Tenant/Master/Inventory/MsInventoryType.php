@@ -19,6 +19,10 @@ class MsInventoryType extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function parts()
     {
         return $this->hasMany(MsPart::class, 'inventory_type_id', 'id');

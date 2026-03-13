@@ -19,6 +19,10 @@ class MsPartVariant extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function parts()
     {
         return $this->hasMany(MsPart::class, 'variant_id', 'id');

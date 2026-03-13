@@ -18,4 +18,8 @@ class MsPartType extends BaseModelTenant
     protected $keyType = 'integer';
 
     protected $guarded = ['created_at', 'updated_at'];
+
+    protected $casts = [
+        'json' => 'array',
+    ];
 }

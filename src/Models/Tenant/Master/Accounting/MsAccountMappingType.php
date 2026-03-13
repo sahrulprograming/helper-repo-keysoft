@@ -27,6 +27,10 @@ class MsAccountMappingType extends BaseModelTenant
     protected $keyType = 'integer';
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function coa()
     {
         return $this->belongsTo(MsCOA::class, 'coa_id');

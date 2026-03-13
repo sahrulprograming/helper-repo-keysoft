@@ -19,6 +19,10 @@ class MsCustomerCategory extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function customers()
     {
         return $this->hasMany(MsCustomer::class, 'category_id', 'id');

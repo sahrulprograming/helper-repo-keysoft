@@ -19,6 +19,10 @@ class MsCity extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function province()
     {
         return $this->belongsTo(MsProvince::class, 'province_id');

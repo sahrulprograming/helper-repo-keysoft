@@ -18,6 +18,10 @@ class MsCategoryCOA extends BaseModelTenant
     protected $keyType = 'integer';
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function coas()
     {
         return $this->hasMany(MsCOA::class, 'category_id');

@@ -19,6 +19,10 @@ class MsProvince extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function country()
     {
         return $this->belongsTo(MsCountry::class, 'country_id');

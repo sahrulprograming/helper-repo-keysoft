@@ -21,6 +21,7 @@ class MsBomHD extends BaseModelTenant
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
+        'json' => 'array',
         'foh_amount' => 'double',
     ];
 

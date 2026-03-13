@@ -21,6 +21,7 @@ class MsPartSupplier extends BaseModelTenant
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
+        'json' => 'array',
         'percentage_order' => 'double',
     ];
 

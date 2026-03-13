@@ -19,6 +19,10 @@ class MsSupplierContact extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function supplier()
     {
         return $this->belongsTo(MsSupplier::class, 'supplier_id', 'id');

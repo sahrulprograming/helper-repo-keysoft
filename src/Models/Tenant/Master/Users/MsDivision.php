@@ -20,6 +20,10 @@ class MsDivision extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function subDivision()
     {
         return $this->belongsTo(MsDivision::class, 'sub_division_id', 'id');

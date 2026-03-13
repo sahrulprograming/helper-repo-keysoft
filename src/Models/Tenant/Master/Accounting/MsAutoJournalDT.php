@@ -13,5 +13,10 @@ class MsAutoJournalDT extends BaseModelTenant
     protected $connection = 'tenant';
     protected $table = 'ms_auto_journal_dt';
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public $timestamps = false;
 }

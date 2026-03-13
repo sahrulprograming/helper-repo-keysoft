@@ -19,6 +19,10 @@ class MsUnit extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function partUnits()
     {
         return $this->hasMany(MsPartUnit::class, 'unit_id', 'id');

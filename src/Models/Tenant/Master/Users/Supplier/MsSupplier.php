@@ -26,6 +26,7 @@ class MsSupplier extends BaseModelTenant
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
+        'json' => 'array',
         'account_payable_limit' => 'double',
     ];
 
