@@ -19,6 +19,10 @@ class MsDistrict extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function city()
     {
         return $this->belongsTo(MsCity::class, 'city_id');
