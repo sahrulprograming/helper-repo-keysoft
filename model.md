@@ -15,6 +15,7 @@ Setiap model wajib punya:
 - `public $incrementing = true;`
 - `protected $keyType = 'integer';` (atau `int` bila memang begitu)
 - `protected $guarded = ['created_at', 'updated_at'];`
+- Jika ada kolom bertipe `json` / `jsonb`, tambahkan `protected $casts` pada model tenant, misalnya `'json' => 'array'`
 
 ## Example (MsCountry Style)
 
@@ -39,6 +40,11 @@ class MsCountry extends BaseModelTenant
     protected $keyType = 'integer';
 
     protected $guarded = ['created_at', 'updated_at'];
+
+    // Tambahkan hanya jika tabel punya kolom json/jsonb
+    protected $casts = [
+        'json' => 'array',
+    ];
 }
 ```
 
