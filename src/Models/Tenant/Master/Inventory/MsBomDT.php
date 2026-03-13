@@ -20,6 +20,7 @@ class MsBomDT extends BaseModelTenant
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
+        'json' => 'array',
         'qty' => 'double',
         'tolerance_percentage' => 'double',
         'percentage_reverse' => 'double',

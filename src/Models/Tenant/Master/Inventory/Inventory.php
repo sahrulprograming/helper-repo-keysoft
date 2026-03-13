@@ -20,6 +20,7 @@ class Inventory extends BaseModelTenant
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
+        'json' => 'array',
         'qty' => 'double',
     ];
 

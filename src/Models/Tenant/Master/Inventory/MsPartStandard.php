@@ -19,6 +19,10 @@ class MsPartStandard extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function part()
     {
         return $this->belongsTo(MsPart::class, 'part_id', 'id');
