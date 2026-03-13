@@ -28,6 +28,7 @@ class MsCustomer extends BaseModelTenant
     protected $guarded = ['created_at', 'updated_at'];
 
     protected $casts = [
+        'json' => 'array',
         'credit_limit' => 'double',
         'invoice_limit' => 'double',
         'deal_transaction_value' => 'double',

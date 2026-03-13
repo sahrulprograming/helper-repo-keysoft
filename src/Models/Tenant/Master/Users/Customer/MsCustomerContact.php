@@ -19,6 +19,10 @@ class MsCustomerContact extends BaseModelTenant
 
     protected $guarded = ['created_at', 'updated_at'];
 
+    protected $casts = [
+        'json' => 'array',
+    ];
+
     public function customer()
     {
         return $this->belongsTo(MsCustomer::class, 'customer_id', 'id');
