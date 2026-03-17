@@ -59,11 +59,16 @@ class MsCOA extends BaseModelTenant
         return $this->hasMany(MsAccountMappingType::class, 'coa_id');
     }
 
-    public function accountMappingTypesMany(): BelongsToMany
+    // public function accountMappingTypesMany(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(MsAccountMappingType::class, 'ms_account_mapping_type', 'coa_id', 'account_mapping_type_id')
+    //         ->withPivot(['account_no', 'status', 'created_by', 'updated_by', 'json'])
+    //         ->withTimestamps();
+    // }
+
+    public function accountTypes()
     {
-        return $this->belongsToMany(MsAccountMappingType::class, 'ms_account_mapping', 'coa_id', 'account_mapping_type_id')
-            ->withPivot(['account_no', 'status', 'created_by', 'updated_by', 'json'])
-            ->withTimestamps();
+        return $this->belongsToMany(MsAccountType::class)->using(MsAccountMappingType::class)->withPivot(['account_no', 'account_type', 'status', 'created_by', 'updated_by', 'json'])->withTimestamps();
     }
 
     public function accountMappings()
