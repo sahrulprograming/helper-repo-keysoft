@@ -22,7 +22,6 @@ class MsPartSupplier extends BaseModelTenant
 
     protected $casts = [
         'json' => 'array',
-        'percentage_order' => 'double',
     ];
 
     public function part()
