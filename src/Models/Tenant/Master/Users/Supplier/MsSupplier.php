@@ -11,6 +11,7 @@ use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsDistrict;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsProvince;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsSubDistrict;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Inventory\MsPart;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Inventory\MsPartSupplier;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Users\MsDivision;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
@@ -34,7 +35,8 @@ class MsSupplier extends BaseModelTenant
 
     public function parts(): BelongsToMany
     {
-        return $this->belongsToMany(MsPart::class, 'ms_part_supplier', 'supplier_id', 'part_id')
+        return $this->belongsToMany(MsPart::class)
+            ->using(MsPartSupplier::class)
             ->withPivot(['delivery_time', 'delivery_unit_id', 'status', 'created_by', 'updated_by', 'json'])
             ->withTimestamps();
     }
