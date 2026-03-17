@@ -25,6 +25,32 @@ class MsSupplierPayment extends BaseModelTenant
         'json' => 'array',
     ];
 
+    // Buat Get data ketika true
+    protected static function booted()
+    {
+        parent::booted();
+
+        static::saving(function ($model) {
+
+            if ($model->isDirty('is_approve')) {
+
+                $payload = request()->attributes->get('jwt_payload');
+
+                if (!$payload || !isset($payload['sub'])) {
+                    throw new \Exception('Invalid JWT payload');
+                }
+
+                if ($model->is_approve) {
+                    $model->approved_by = $payload['sub'];
+                    $model->approved_at = now();
+                } else {
+                    $model->approved_by = null;
+                    $model->approved_at = null;
+                }
+            }
+        });
+    }
+
     public function supplier()
     {
         return $this->belongsTo(MsSupplier::class, 'supplier_id', 'id');
