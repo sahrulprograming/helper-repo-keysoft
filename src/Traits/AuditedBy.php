@@ -15,6 +15,21 @@ trait AuditedBy
 
     public static function bootAuditedBy(): void
     {
+        $getUserId = function () {
+            $payload = request()->attributes->get('jwt_payload');
+            $sub = $payload['sub'] ?? Auth::id() ?? null;
+
+            if (!$sub) {
+                return null;
+            }
+
+            // Ambil username dari model MsUser berdasarkan ID (sub)
+            return Cache::remember('user_username_' . $sub, 3600, function () use ($sub) {
+                $user = MsUser::find($sub);
+                return $user ? $user->username : $sub;
+            });
+        };
+
         $clearCache = function ($model) {
             // Cek apakah model memiliki method 'getCacheKeys'
             if (method_exists($model, 'getCacheKeys')) {
@@ -27,9 +42,9 @@ trait AuditedBy
             }
         };
 
-        static::creating(function ($model) {
+        static::creating(function ($model) use ($getUserId) {
             if (!$model->isDirty('created_by')) {
-                $model->created_by = Auth::id() ?? null;
+                $model->created_by = $getUserId();
             }
 
             if (
@@ -49,26 +64,27 @@ trait AuditedBy
             }
         });
 
-        static::updating(function ($model) {
+        static::updating(function ($model) use ($getUserId) {
             if (Schema::hasColumn($model->getTable(), 'updated_by') && !$model->isDirty('updated_by')) {
-                $model->updated_by = Auth::id() ?? null;
+                $model->updated_by = $getUserId();
             }
         });
 
-        static::saving(function ($model) {
+        static::saving(function ($model) use ($getUserId) {
             if (!$model->isDirty('updated_by')) {
-                $model->updated_by = Auth::id() ?? null;
+                $model->updated_by = $getUserId();
             }
         });
 
-        static::deleting(function ($model) {
+        static::deleting(function ($model) use ($getUserId) {
             if (Schema::hasColumn($model->getTable(), 'deleted_by')) {
 
-                $model->deleted_by = Auth::id();
+                $userId = $getUserId();
+                $model->deleted_by = $userId;
 
                 $model->newQuery()
                     ->where($model->getKeyName(), $model->getKey())
-                    ->update(['deleted_by' => Auth::id()]);
+                    ->update(['deleted_by' => $userId]);
             }
         });
 
@@ -99,32 +115,32 @@ trait AuditedBy
 
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(MsUser::class, 'created_by');
+        return $this->belongsTo(MsUser::class, 'created_by', 'username');
     }
 
     public function getCreatorNameAttribute()
     {
-        return $this->createdBy?->name;
+        return $this->createdBy?->username ?? $this->created_by;
     }
 
     public function updatedBy(): BelongsTo
     {
-        return $this->belongsTo(MsUser::class, 'updated_by');
+        return $this->belongsTo(MsUser::class, 'updated_by', 'username');
     }
 
     public function getUpdatedNameAttribute()
     {
-        return $this->updatedBy?->name;
+        return $this->updatedBy?->username ?? $this->updated_by;
     }
 
     public function deletedBy(): BelongsTo
     {
-        return $this->belongsTo(MsUser::class, 'deleted_by');
+        return $this->belongsTo(MsUser::class, 'deleted_by', 'username');
     }
 
     public function getDeletedNameAttribute()
     {
-        return $this->deletedBy?->name;
+        return $this->deletedBy?->username ?? $this->deleted_by;
     }
 
 }
