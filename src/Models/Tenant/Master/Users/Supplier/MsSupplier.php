@@ -3,12 +3,14 @@
 namespace Keysoft\HelperLibrary\Models\Tenant\Master\Users\Supplier;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCity;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCountry;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsDistrict;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsProvince;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsSubDistrict;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Inventory\MsPart;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Users\MsDivision;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
@@ -29,6 +31,13 @@ class MsSupplier extends BaseModelTenant
         'json' => 'array',
         'account_payable_limit' => 'double',
     ];
+
+    public function parts(): BelongsToMany
+    {
+        return $this->belongsToMany(MsPart::class, 'ms_part_supplier', 'supplier_id', 'part_id')
+            ->withPivot(['delivery_time', 'delivery_unit_id', 'status', 'created_by', 'updated_by', 'json'])
+            ->withTimestamps();
+    }
 
     public function supplierCategory()
     {

@@ -3,6 +3,7 @@
 namespace Keysoft\HelperLibrary\Models\Tenant\Master\Accounting;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
@@ -30,6 +31,13 @@ class MsAccountMappingType extends BaseModelTenant
     protected $casts = [
         'json' => 'array',
     ];
+
+    public function coas(): BelongsToMany
+    {
+        return $this->belongsToMany(MsCOA::class, 'ms_account_mapping', 'account_mapping_type_id', 'coa_id')
+            ->withPivot(['account_no', 'status', 'created_by', 'updated_by', 'json'])
+            ->withTimestamps();
+    }
 
     public function coa()
     {

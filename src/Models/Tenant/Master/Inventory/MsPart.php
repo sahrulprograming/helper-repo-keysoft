@@ -3,7 +3,9 @@
 namespace Keysoft\HelperLibrary\Models\Tenant\Master\Inventory;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Keysoft\HelperLibrary\Models\BaseModelTenant;
+use Keysoft\HelperLibrary\Models\Tenant\Master\Users\Supplier\MsSupplier;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
 class MsPart extends BaseModelTenant
@@ -73,9 +75,11 @@ class MsPart extends BaseModelTenant
         return $this->belongsTo(MsUnit::class, 'weight_unit_id', 'id');
     }
 
-    public function suppliers()
+    public function suppliers(): BelongsToMany
     {
-        return $this->hasMany(MsPartSupplier::class, 'part_id', 'id');
+        return $this->belongsToMany(MsSupplier::class, 'ms_part_supplier', 'part_id', 'supplier_id')
+            ->withPivot(['delivery_time', 'delivery_unit_id', 'status', 'created_by', 'updated_by', 'json'])
+            ->withTimestamps();
     }
 
     public function bomHeaders()
