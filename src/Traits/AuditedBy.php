@@ -15,20 +15,12 @@ trait AuditedBy
 
     public static function bootAuditedBy(): void
     {
-        $getUserId = function () {
-            $payload = request()->attributes->get('jwt_payload');
-            $sub = $payload['sub'] ?? Auth::id() ?? null;
+        $payload = request()->attributes->get('jwt_payload');
+        $userId = $payload['userId'] ?? Auth::id() ?? null;
 
-            if (!$sub) {
-                return null;
-            }
-
-            // Ambil username dari model MsUser berdasarkan ID (sub)
-            return Cache::remember('user_username_' . $sub, 3600, function () use ($sub) {
-                $user = MsUser::find($sub);
-                return $user ? $user->username : $sub;
-            });
-        };
+        if (!$userId) {
+            return;
+        }
 
         $clearCache = function ($model) {
             // Cek apakah model memiliki method 'getCacheKeys'
@@ -42,9 +34,9 @@ trait AuditedBy
             }
         };
 
-        static::creating(function ($model) use ($getUserId) {
+        static::creating(function ($model) use ($userId) {
             if (!$model->isDirty('created_by')) {
-                $model->created_by = $getUserId();
+                $model->created_by = $userId;
             }
 
             if (
@@ -64,22 +56,20 @@ trait AuditedBy
             }
         });
 
-        static::updating(function ($model) use ($getUserId) {
+        static::updating(function ($model) use ($userId) {
             if (Schema::hasColumn($model->getTable(), 'updated_by') && !$model->isDirty('updated_by')) {
-                $model->updated_by = $getUserId();
+                $model->updated_by = $userId;
             }
         });
 
-        static::saving(function ($model) use ($getUserId) {
+        static::saving(function ($model) use ($userId) {
             if (!$model->isDirty('updated_by')) {
-                $model->updated_by = $getUserId();
+                $model->updated_by = $userId;
             }
         });
 
-        static::deleting(function ($model) use ($getUserId) {
+        static::deleting(function ($model) use ($userId) {
             if (Schema::hasColumn($model->getTable(), 'deleted_by')) {
-
-                $userId = $getUserId();
                 $model->deleted_by = $userId;
 
                 $model->newQuery()
