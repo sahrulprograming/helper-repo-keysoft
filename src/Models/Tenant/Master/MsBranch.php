@@ -17,7 +17,7 @@ class MsBranch extends BaseModelTenant
     use HasFactory, AuditedBy;
 
     protected $connection = 'tenant';
-    protected $table = 'branch';
+    protected $table = 'ms_branch';
 
     protected $primaryKey = 'id';
     public $incrementing = true;

@@ -11,7 +11,7 @@ class MsEntity extends BaseModelTenant
     use HasFactory, AuditedBy;
 
     protected $connection = 'tenant';
-    protected $table = 'entity';
+    protected $table = 'ms_entity';
 
     protected $primaryKey = 'id';
     public $incrementing = true;
