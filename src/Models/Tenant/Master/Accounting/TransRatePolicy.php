@@ -7,7 +7,7 @@ use Keysoft\HelperLibrary\Models\BaseModelTenant;
 use Keysoft\HelperLibrary\Models\Tenant\Master\Common\MsCurrency;
 use Keysoft\HelperLibrary\Traits\AuditedBy;
 
-class MsForex extends BaseModelTenant
+class TransRatePolicy extends BaseModelTenant
 {
     use HasFactory, AuditedBy;
 
