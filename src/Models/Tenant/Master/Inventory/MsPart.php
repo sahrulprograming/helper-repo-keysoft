@@ -83,7 +83,6 @@ class MsPart extends BaseModelTenant
             'part_id',
             'supplier_id'
         )
-            ->using(MsPartSupplier::class)
             ->withPivot(['delivery_time', 'delivery_unit_id', 'status', 'created_by', 'updated_by', 'json'])
             ->withTimestamps();
     }
