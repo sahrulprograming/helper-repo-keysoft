@@ -25,6 +25,15 @@ class MsBomHD extends BaseModelTenant
         'foh_amount' => 'double',
     ];
 
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        static::deleting(function (self $bom): void {
+            $bom->details()->delete();
+        });
+    }
+
     public function part()
     {
         return $this->belongsTo(MsPart::class, 'part_id', 'id');
