@@ -35,7 +35,12 @@ class MsSupplier extends BaseModelTenant
 
     public function parts(): BelongsToMany
     {
-        return $this->belongsToMany(MsPart::class)
+        return $this->belongsToMany(
+            MsPart::class,
+            'ms_part_supplier',
+            'supplier_id',
+            'part_id'
+        )
             ->using(MsPartSupplier::class)
             ->withPivot(['delivery_time', 'delivery_unit_id', 'status', 'created_by', 'updated_by', 'json'])
             ->withTimestamps();
