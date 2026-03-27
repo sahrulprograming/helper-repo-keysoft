@@ -25,6 +25,16 @@ class MsPart extends BaseModelTenant
         'json' => 'array',
     ];
 
+    protected static function booted(): void
+    {
+        parent::booted();
+
+        static::deleting(function (self $part): void {
+            $part->units()->delete();
+            $part->suppliers()->detach();
+        });
+    }
+
     public function inventoryType()
     {
         return $this->belongsTo(MsInventoryType::class, 'inventory_type_id', 'id');
